@@ -89,6 +89,9 @@ const (
 	OdfVolumeGroupSnapshotClassCrdName = "volumegroupsnapshotclasses.groupsnapshot.storage.openshift.io"
 	ObjectBucketClaimCrdName           = "objectbucketclaims.objectbucket.io"
 	ObjectBucketCrdName                = "objectbuckets.objectbucket.io"
+
+	metricsServiceName = "ocs-client-operator-metrics"
+	metricsPort        = 8080
 )
 
 // extractClusterID parses the clusterID from a CSI volume/snapshot handle.
@@ -764,6 +767,14 @@ func (r *storageClientReconcile) reconcileClientStatusReporterJob(operatorVersio
 										{
 											Name:  utils.OperatorVersionEnvVar,
 											Value: operatorVersion,
+										},
+										{
+											Name:  utils.MetricsServiceNameEnvVar,
+											Value: metricsServiceName,
+										},
+										{
+											Name:  utils.MetricsPortEnvVar,
+											Value: strconv.Itoa(int(metricsPort)),
 										},
 									},
 								},
